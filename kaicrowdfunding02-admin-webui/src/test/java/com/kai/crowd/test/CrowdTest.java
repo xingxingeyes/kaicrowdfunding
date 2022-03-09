@@ -1,9 +1,12 @@
 package com.kai.crowd.test;
 
+
 import com.kai.crowd.entity.Admin;
 import com.kai.crowd.mapper.AdminMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,9 +27,35 @@ public class CrowdTest {
     private AdminMapper adminMapper;
 
     @Test
+    public void testLog() {
+        // 1.获取logger对象，这里传入的Class对象就是当前打印日志的类
+        Logger logger = LoggerFactory.getLogger(CrowdTest.class);
+        // 2.根据不同日志级别打印日志
+        logger.debug("hello I am Debug level!!!");
+        logger.debug("hello I am Debug level!!!");
+        logger.debug("hello I am Debug level!!!");
+
+        logger.info("hello I am Info level!!!");
+        logger.info("hello I am Info level!!!");
+        logger.info("hello I am Info level!!!");
+
+        logger.warn("hello I am Warn level!!!");
+        logger.warn("hello I am Warn level!!!");
+        logger.warn("hello I am Warn level!!!");
+
+        logger.error("hello I am Error level!!!");
+        logger.error("hello I am Error level!!!");
+        logger.error("hello I am Error level!!!");
+    }
+
+
+
+    @Test
     public void testInsertAdmin() {
         Admin admin = new Admin(null, "tom", "123", "汤姆", "tom@qq.com", null);
         int count = adminMapper.insert(admin);
+        // sysout本质上只一个IO操作，通常IO操作是比较消耗性能的。如果sysout很多，那么多性能影响就比较大了。
+        // 如果使用日志系统，那么日志级别就可以批量的通知信息打印。
         System.out.println("受影响的行数："+count);
     }
 

@@ -15,7 +15,7 @@
     </bean>
 
     <!-- 配置SqlSessionFactionBean整合MyBatis-->
-    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 指定Mybatis全局配置文件位置-->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <!-- 指定Mapper.xml配置文件位置-->
