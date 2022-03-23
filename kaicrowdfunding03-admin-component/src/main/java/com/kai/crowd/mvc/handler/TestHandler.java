@@ -5,6 +5,7 @@ import com.kai.crowd.entity.Admin;
 import com.kai.crowd.entity.ParamData;
 import com.kai.crowd.entity.Student;
 import com.kai.crowd.service.AdminService;
+import com.kai.crowd.util.CrowdUtil;
 import com.kai.crowd.util.ResultEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -31,9 +33,15 @@ public class TestHandler {
     private AdminService adminService;
 
     @RequestMapping("/test/ssm.html")
-    public String testSsm(ModelMap modelMap) {
+    public String testSsm(ModelMap modelMap, HttpServletRequest request) {
+        boolean judgeResult = CrowdUtil.judgeRequestType(request);
+        logger.info("judgeResult是否为ajax请求："+judgeResult);
         List<Admin> adminList = adminService.getAll();
         modelMap.addAttribute("adminList", adminList);
+
+        String a = null;
+        System.out.println(a.length());
+
         return "target";
     }
 
@@ -68,7 +76,9 @@ public class TestHandler {
 
     @ResponseBody
     @RequestMapping("/send/compose/object.json")
-    public ResultEntity<Student> testReceiveComposeObject(@RequestBody Student student) {
+    public ResultEntity<Student> testReceiveComposeObject(@RequestBody Student student, HttpServletRequest request) {
+        boolean judgeResult = CrowdUtil.judgeRequestType(request);
+        logger.info("judgeResult是否为ajax请求："+judgeResult);
         logger.info(student.toString());
         return ResultEntity.successWithData(student);
     }

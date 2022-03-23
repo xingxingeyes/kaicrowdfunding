@@ -13,6 +13,7 @@
     <%-- http://localhost:8080/kaicrowdfunding/test/ssm.html --%>
     <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/"/>
     <script type="text/javascript" src="jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="layer/layer.js"></script>
     <script type="text/javascript">
         $(function () {
 
@@ -124,6 +125,13 @@
             });
 
 
+            $("#btn5").click(function () {
+                layer.msg("layer弹框");
+
+            });
+
+
+
 
 
         });
@@ -145,6 +153,9 @@
 <br/><br/>
 
 <button id="btn4">Send [5,8,12] four</button>
+<br/><br/>
+
+<button id="btn5">点我弹框</button>
 <br/><br/>
 
 </body>
