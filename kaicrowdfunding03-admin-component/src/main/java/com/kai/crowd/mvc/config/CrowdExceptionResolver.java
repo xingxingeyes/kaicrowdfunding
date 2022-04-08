@@ -2,6 +2,7 @@ package com.kai.crowd.mvc.config;
 
 import com.google.gson.Gson;
 import com.kai.crowd.constant.CrowdConstant;
+import com.kai.crowd.exception.LoginFailedException;
 import com.kai.crowd.util.CrowdUtil;
 import com.kai.crowd.util.ResultEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,10 +18,10 @@ import java.io.IOException;
 public class CrowdExceptionResolver {
 
 
-    @ExceptionHandler(value = ArithmeticException.class)
-    public ModelAndView resolveMathException(ArithmeticException exception, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @ExceptionHandler(value = LoginFailedException.class)
+    public ModelAndView resolveLoginFailedException(LoginFailedException exception, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        String viewName = "system-error";
+        String viewName = "admin-login";
         return commonResolve(viewName, exception, request, response);
     }
 

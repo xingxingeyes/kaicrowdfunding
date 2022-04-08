@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 // 在类上标记必要的注解，Spring整合Junit
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-persist-mybatis.xml","classpath:spring-persist-tx.xml"})
+@ContextConfiguration(locations = {"classpath:spring-persist-mybatis.xml", "classpath:spring-persist-tx.xml"})
 public class CrowdTest {
 
     @Autowired
@@ -59,20 +59,26 @@ public class CrowdTest {
     }
 
 
-
     @Test
     public void testInsertAdmin() {
         Admin admin = new Admin(null, "tom", "123", "汤姆", "tom@qq.com", null);
         int count = adminMapper.insert(admin);
         // sysout本质上只一个IO操作，通常IO操作是比较消耗性能的。如果sysout很多，那么多性能影响就比较大了。
         // 如果使用日志系统，那么日志级别就可以批量的通知信息打印。
-        System.out.println("受影响的行数："+count);
+        System.out.println("受影响的行数：" + count);
     }
 
     @Test
     public void testConnection() throws SQLException {
         Connection connection = dataSource.getConnection();
         System.out.println(connection);
+    }
+
+    @Test
+    public void test() {
+        for (int i = 0; i < 238; i++) {
+            adminMapper.insert(new Admin(null, "loginAcct" + i, "userPswd" + i, "userName" + i, "email" + i, null));
+        }
     }
 
 
