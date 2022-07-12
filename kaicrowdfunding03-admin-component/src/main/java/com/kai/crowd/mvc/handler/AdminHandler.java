@@ -100,7 +100,7 @@ public class AdminHandler {
             HttpSession session
     ) {
         // 调用Service方法执行登录检查
-        // 这个方法如果能够返回admin对象说明登录成功，如果账号、密码不正确则会抛出异常
+        // 这个方法如果能够返回admin对象说明登录成功，如果账号、密码不正确则会抛出异常。
         Admin admin = adminService.getAdminByLoginAcct(loginAcct, userPswd);
         // 将登录成功返回的admin对象存入Session域
         session.setAttribute(CrowdConstant.ATTR_NAME_ADMIN, admin);
