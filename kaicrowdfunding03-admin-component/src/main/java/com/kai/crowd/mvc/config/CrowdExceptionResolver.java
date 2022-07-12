@@ -2,6 +2,8 @@ package com.kai.crowd.mvc.config;
 
 import com.google.gson.Gson;
 import com.kai.crowd.constant.CrowdConstant;
+import com.kai.crowd.exception.LoginAcctAlreadyInUseException;
+import com.kai.crowd.exception.LoginAcctAlreadyInUseForUpdateException;
 import com.kai.crowd.exception.LoginFailedException;
 import com.kai.crowd.util.CrowdUtil;
 import com.kai.crowd.util.ResultEntity;
@@ -17,6 +19,19 @@ import java.io.IOException;
 @ControllerAdvice
 public class CrowdExceptionResolver {
 
+    @ExceptionHandler(value = LoginAcctAlreadyInUseForUpdateException.class)
+    public ModelAndView resolveLoginAcctAlreadyInUseForUpdateException(LoginAcctAlreadyInUseForUpdateException exception, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String viewName = "system-error";
+        return commonResolve(viewName, exception, request, response);
+    }
+
+    @ExceptionHandler(value = LoginAcctAlreadyInUseException.class)
+    public ModelAndView resolveLoginAcctAlreadyInUseException(LoginAcctAlreadyInUseException exception, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String viewName = "admin-add";
+        return commonResolve(viewName, exception, request, response);
+    }
 
     @ExceptionHandler(value = LoginFailedException.class)
     public ModelAndView resolveLoginFailedException(LoginFailedException exception, HttpServletRequest request, HttpServletResponse response) throws Exception {

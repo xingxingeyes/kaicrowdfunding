@@ -43,7 +43,7 @@
         // 根据pageIndex计算得到PageNum
         var pageNum = pageIndex + 1;
         // 跳转页面
-        window.location.href = "admin/get/page.html?pageNum=" + pageNum;
+        window.location.href = "admin/get/page.html?pageNum=" + pageNum + "&keyword=${param.keyword}";
         // 由于每一个页码按钮都是超链接，所以在这个函数最后取消链接的默认行为
         return false;
     }
@@ -63,22 +63,30 @@
                     <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 数据列表</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" style="float:left;">
+                    <form action="admin/get/page.html" method="post" class="form-inline" role="form"
+                          style="float:left;">
                         <div class="form-group has-feedback">
                             <div class="input-group">
                                 <div class="input-group-addon">查询条件</div>
-                                <input class="form-control has-success" type="text" placeholder="请输入查询条件">
+                                <input name="keyword" class="form-control has-success" type="text"
+                                       placeholder="请输入查询条件">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询
+                        <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询
                         </button>
                     </form>
                     <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
                             class=" glyphicon glyphicon-remove"></i> 删除
                     </button>
+                    <!--
+                    旧代码
                     <button type="button" class="btn btn-primary" style="float:right;"
                             onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增
                     </button>
+                    -->
+                    <!-- 新代码-->
+                    <a style="float:right;" href="admin/to/add/page.html" class="btn btn-primary"><i
+                            class="glyphicon glyphicon-plus">新增</i></a>
                     <br>
                     <hr style="clear:both;">
                     <div class="table-responsive">
@@ -110,10 +118,18 @@
                                         <td>
                                             <button type="button" class="btn btn-success btn-xs"><i
                                                     class=" glyphicon glyphicon-check"></i></button>
-                                            <button type="button" class="btn btn-primary btn-xs"><i
+                                            <!--
+                                                旧代码
+                                                <button type="button" class="btn btn-primary btn-xs"><i
                                                     class=" glyphicon glyphicon-pencil"></i></button>
-                                            <button type="button" class="btn btn-danger btn-xs"><i
-                                                    class=" glyphicon glyphicon-remove"></i></button>
+                                            -->
+
+                                            <!-- 新代码 -->
+                                            <a href="admin/to/edit/page.html?adminId=${admin.id}&pageNum=${requestScope.pageInfo.pageNum}&keyword=${param.keyword}"
+                                               class="btn btn-primary btn-xs"><i
+                                                    class=" glyphicon glyphicon-pencil"></i></a>
+                                            <a href="admin/remove/${admin.id}/${requestScope.pageInfo.pageNum}/${param.keyword}.html"
+                                               class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></a>
                                         </td>
                                     </tr>
                                 </c:forEach>

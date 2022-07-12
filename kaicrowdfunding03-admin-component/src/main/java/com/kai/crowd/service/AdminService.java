@@ -19,4 +19,10 @@ public interface AdminService {
     Admin getAdminByLoginAcct(String loginAcct, String userPswd);
 
     PageInfo<Admin> getPageInfo(String keyword, Integer pageNum, Integer pageSize);
+
+    void revove(Integer amdinId);
+
+    Admin getAdminById(Integer adminId);
+
+    void update(Admin admin);
 }

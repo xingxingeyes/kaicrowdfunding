@@ -4,6 +4,7 @@ package com.kai.crowd.test;
 import com.kai.crowd.entity.Admin;
 import com.kai.crowd.mapper.AdminMapper;
 import com.kai.crowd.service.AdminService;
+import com.kai.crowd.util.CrowdUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -77,7 +78,8 @@ public class CrowdTest {
     @Test
     public void test() {
         for (int i = 0; i < 238; i++) {
-            adminMapper.insert(new Admin(null, "loginAcct" + i, "userPswd" + i, "userName" + i, "email" + i, null));
+            String userPswdFrom = CrowdUtil.md5("userPswd" + i);
+            adminMapper.insert(new Admin(null, "loginAcct" + i, userPswdFrom, "userName" + i, "email" + i, null));
         }
     }
 

@@ -9,9 +9,15 @@ import com.kai.crowd.exception.LoginFailedException;
 import com.kai.crowd.mapper.AdminMapper;
 import com.kai.crowd.service.AdminService;
 import com.kai.crowd.util.CrowdUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.jdbc.LobRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +31,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminMapper adminMapper;
+
+    private Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     public List<Admin> getAll() {
         return adminMapper.selectByExample(new AdminExample());
@@ -81,7 +89,54 @@ public class AdminServiceImpl implements AdminService {
         return new PageInfo<>(list);
     }
 
+    @Override
+    public void revove(Integer amdinId) {
+        adminMapper.deleteByPrimaryKey(amdinId);
+    }
+
+    @Override
+    public Admin getAdminById(Integer adminId) {
+        return adminMapper.selectByPrimaryKey(adminId);
+    }
+
+    @Override
     public void saveAdmin(Admin admin) {
-        adminMapper.insert(admin);
+
+        // 1.密码加密
+        String userPswd = admin.getUserPswd();
+        userPswd = CrowdUtil.md5(userPswd);
+        admin.setUserPswd(userPswd);
+        // 2.生成创建时间
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formatDate = sdf.format(date);
+        admin.setCreateTime(formatDate);
+
+
+        try {
+            // 执行保存
+            adminMapper.insert(admin);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            logger.error("异常全类名" + exception.getClass().getName());
+
+            if (exception instanceof DuplicateKeyException) {
+                throw new LobRetrievalFailureException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
+            }
+        }
+    }
+
+    @Override
+    public void update(Admin admin) {
+        try {
+            // "Selective"表示有选择的更新，对于null值得字段不更新
+            adminMapper.updateByPrimaryKeySelective(admin);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            logger.error("异常全类名" + exception.getClass().getName());
+            if (exception instanceof DuplicateKeyException) {
+                throw new LobRetrievalFailureException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
+            }
+        }
     }
 }
