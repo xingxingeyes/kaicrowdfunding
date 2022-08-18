@@ -1,4 +1,4 @@
-package com.kai.crowd.service;
+package com.kai.crowd.service.api;
 
 import com.github.pagehelper.PageInfo;
 import com.kai.crowd.entity.Admin;

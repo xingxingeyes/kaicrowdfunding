@@ -7,7 +7,7 @@ import com.kai.crowd.entity.Admin;
 import com.kai.crowd.entity.AdminExample;
 import com.kai.crowd.exception.LoginFailedException;
 import com.kai.crowd.mapper.AdminMapper;
-import com.kai.crowd.service.AdminService;
+import com.kai.crowd.service.api.AdminService;
 import com.kai.crowd.util.CrowdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,7 +3,7 @@ package com.kai.crowd.mvc.handler;
 import com.github.pagehelper.PageInfo;
 import com.kai.crowd.constant.CrowdConstant;
 import com.kai.crowd.entity.Admin;
-import com.kai.crowd.service.AdminService;
+import com.kai.crowd.service.api.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -84,7 +84,6 @@ public class AdminHandler {
 
         return "admin-page";
     }
-
 
     @RequestMapping("/admin/do/logout.html")
     public String doLogout(HttpSession session) {
