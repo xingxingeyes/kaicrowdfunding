@@ -5,6 +5,7 @@ import com.kai.crowd.entity.Role;
 import com.kai.crowd.service.api.RoleService;
 import com.kai.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,7 @@ public class RoleHandler {
     }
 
    //@ResponseBody
+    @PreAuthorize("hasRole('部长')")
     @RequestMapping("/role/get/page/info.json")
     public ResultEntity<PageInfo<Role>> getPageInfo(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,

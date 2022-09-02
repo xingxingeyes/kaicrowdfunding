@@ -5,6 +5,7 @@ import com.kai.crowd.constant.CrowdConstant;
 import com.kai.crowd.entity.Admin;
 import com.kai.crowd.service.api.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.math.BigInteger;
 
 /**
  * @description:
@@ -26,7 +26,7 @@ public class AdminHandler {
     private AdminService adminService;
 
     @RequestMapping("/admin/update.html")
-    public String update(Admin admin, @RequestParam("pageNum") Integer pageNum, @RequestParam("keyword") String keyword){
+    public String update(Admin admin, @RequestParam("pageNum") Integer pageNum, @RequestParam("keyword") String keyword) {
         adminService.update(admin);
         return "redirect:/admin/get/page.html?pageNum=" + pageNum + "&keyword=" + keyword;
     }
@@ -44,6 +44,7 @@ public class AdminHandler {
         return "admin-edit";
     }
 
+    @PreAuthorize("hasAnyAuthority('user:save')")
     @RequestMapping("/admin/save.html")
     public String save(Admin admin) {
         adminService.saveAdmin(admin);

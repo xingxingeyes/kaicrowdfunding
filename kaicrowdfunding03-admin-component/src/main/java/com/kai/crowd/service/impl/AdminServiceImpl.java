@@ -8,12 +8,12 @@ import com.kai.crowd.entity.AdminExample;
 import com.kai.crowd.exception.LoginFailedException;
 import com.kai.crowd.mapper.AdminMapper;
 import com.kai.crowd.service.api.AdminService;
-import com.kai.crowd.util.CrowdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.LobRetrievalFailureException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +31,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminMapper adminMapper;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     private Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
 
@@ -68,9 +70,10 @@ public class AdminServiceImpl implements AdminService {
         String userPswdDB = admin.getUserPswd();
 
         // 5.将表单提交的明文密码进行加密
-        String userPswdFrom = CrowdUtil.md5(userPswd);
+//        String userPswdFrom = CrowdUtil.md5(userPswd);
         // 6.对密码进行比较
-        if (!Objects.equals(userPswdDB, userPswdFrom)) {
+//        if (!Objects.equals(userPswdDB, userPswdFrom)) {
+        if (!Objects.equals(userPswdDB, userPswd)) {
             // 7.如果密码不一致则抛出异常
             throw new LoginFailedException(CrowdConstant.MESSAGE_LOGIN_FAILED);
         }
@@ -104,7 +107,8 @@ public class AdminServiceImpl implements AdminService {
 
         // 1.密码加密
         String userPswd = admin.getUserPswd();
-        userPswd = CrowdUtil.md5(userPswd);
+        // userPswd = CrowdUtil.md5(userPswd);
+        userPswd = passwordEncoder.encode(userPswd);
         admin.setUserPswd(userPswd);
         // 2.生成创建时间
         Date date = new Date();
@@ -149,5 +153,15 @@ public class AdminServiceImpl implements AdminService {
         if (roleIdList != null && roleIdList.size() > 0) {
             adminMapper.insertNewRelationship(adminId, roleIdList);
         }
+    }
+
+    @Override
+    public Admin getAdminByLoginAcct(String username) {
+        AdminExample example = new AdminExample();
+        AdminExample.Criteria criteria = example.createCriteria();
+        criteria.andLoginAcctEqualTo(username);
+        List<Admin> list = adminMapper.selectByExample(example);
+
+        return list.get(0);
     }
 }

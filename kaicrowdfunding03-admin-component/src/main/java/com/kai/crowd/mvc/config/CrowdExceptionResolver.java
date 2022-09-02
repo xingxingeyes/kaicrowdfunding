@@ -5,6 +5,7 @@ import com.kai.crowd.constant.CrowdConstant;
 import com.kai.crowd.exception.LoginAcctAlreadyInUseException;
 import com.kai.crowd.exception.LoginAcctAlreadyInUseForUpdateException;
 import com.kai.crowd.exception.LoginFailedException;
+import com.kai.crowd.mvc.interceptor.AccessForbiddenException;
 import com.kai.crowd.util.CrowdUtil;
 import com.kai.crowd.util.ResultEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 // @ControllerAdvice表示当前类是一个基于注解的异常处理器类
 @ControllerAdvice
@@ -46,6 +46,13 @@ public class CrowdExceptionResolver {
     public ModelAndView resolveNullPointException(NullPointerException exception, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String viewName = "system-error";
+        return commonResolve(viewName, exception, request, response);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ModelAndView resolveException(AccessForbiddenException exception, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String viewName = "admin-login";
         return commonResolve(viewName, exception, request, response);
     }
 

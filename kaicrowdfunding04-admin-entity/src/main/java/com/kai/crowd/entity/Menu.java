@@ -16,7 +16,7 @@ public class Menu {
     // 节点图标样式
     private String icon;
     // 存储子节点的集合，初始化时为了避免空指针异常
-    private List<Menu> children = new ArrayList<>();
+    private List<Menu> children = new ArrayList();
     // 控制节点是否为默认打开状态
     private boolean open = true;
 
