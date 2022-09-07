@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelear.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style type="text/css">
+            div {
+                width: 300px;
+                height: 300px;
+                border: 1px solid pink;
+            }
+
+
+        </style>
+
+    </head>
+    <body>
+        <h3>替换标签体</h3>
+        <p th:text="讲过服务器处理后可以看到的内容">直接在浏览器上打开是可以看到的内容</p>
+        <h3>替换属性值</h3>
+        <input type="text" value="AAAAAAAAA" th:value="BBBBBB"></input>
+        <div style="background-color:yellow" th:style="'background-color:green'"></div>
+
+        <h3>访问属性域</h3>
+        <p th:text="${attrNameRequestScope}">访问请求域</p>
+        <p th:text="${session.attrNameSessionScope}">访问session域</p>
+        <p th:text="${application.attrNameAppScope}">访问app域</p>
+
+        <h3>获取contextPath值</h3>
+        <p th:text="@{/aaa/bbb/ccc/}">@{}的作用是吧contextPath值附件到指定的地址前</p>
+        <a href="../aaa/bbb/ccc.html" th:href="@{/aaa/bbb/ccc.html}">使用场景举例</a>
+
+        <h3>直接执行表达式</h3>
+        <!-- 会转义内容-->
+        <p>[[${attrNameRequestScope}]]</p>
+        <!-- 不会转义内容-->
+        <p>[(${attrNameRequestScope})]</p>
+
+        <h3>测试if判断</h3>
+        <p th:if="${not #strings.isEmpty(attrNameRequestScope)}">attrNameRequestScope不为空</p>
+        ~<p th:if="${#strings.isEmpty(attrNameRequestScope)}">attrNameRequestScope不为空</p>
+
+        <h3>遍历集合</h3>
+        <div>
+            <p th:text="${str}" th:each="str : ${list}"></p>
+        </div>
+        <div th:each="str : ${list}">
+            <p th:text="${str}"></p>
+        </div>
+
+        <h3>包含页面片段</h3>
+        <!--"::"左边的值拼前后缀后必须要能够找到要包含的文件-->
+        <!--"::"右边的值是代码片段的名字-->
+        <div th:insert="~{include/part :: myFirstPart}"></div>
+        <div style="background-color:red" th:replace="~{include/part :: mySecondPart}"></div>
+        <div style="background-color:yellow" th:include="~{include/part :: myThirdPart}"></div>
+
+    </body>
+</html>
