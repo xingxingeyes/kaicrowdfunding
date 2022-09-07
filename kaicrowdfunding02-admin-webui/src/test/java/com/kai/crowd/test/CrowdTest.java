@@ -3,7 +3,7 @@ package com.kai.crowd.test;
 
 import com.kai.crowd.entity.Admin;
 import com.kai.crowd.mapper.AdminMapper;
-import com.kai.crowd.service.AdminService;
+import com.kai.crowd.service.api.AdminService;
 import com.kai.crowd.util.CrowdUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
