@@ -7,7 +7,7 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
-ureka:
+eureka:
   client:
     service-url:
       defaultZone:  http://localhost:1000/eureka/
