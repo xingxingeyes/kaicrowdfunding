@@ -4,10 +4,11 @@ import com.kai.crowd.entity.po.MemberPO;
 import com.kai.crowd.service.api.MemberService;
 import com.kai.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+@Transactional(readOnly = true) // 在类上使用@TRansactional(readOnly = true)针对查询造作设置事务属性
 @RestController
 public class MemberProviderHandler {
 
