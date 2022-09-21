@@ -19,6 +19,7 @@ public class MemberProviderHandler {
     public ResultEntity<MemberPO> getMemberPOByLoginAccRemote(@RequestParam("loginacct") String loginacct){
         try {
             // 1.调用本地service完成查询
+
             MemberPO memberPO = memberService.getMemberPOByLoginAcc(loginacct);
             // 2.如果没有抛异常，就返回成功结构
             return ResultEntity.successWithData(memberPO);
