@@ -6,11 +6,12 @@ import com.kai.crowd.mapper.MemberPOMapper;
 import com.kai.crowd.service.api.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = true) // 在类上使用@TRansactional(readOnly = true)针对查询造作设置事务属性
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -24,6 +25,15 @@ public class MemberServiceImpl implements MemberService {
         MemberPOExample.Criteria criteria = example.createCriteria();
         criteria.andLoginacctEqualTo(loginacct);
         List<MemberPO> list = memberPOMapper.selectByExample(example);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
         return list.get(0);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class, readOnly = false)
+    @Override
+    public void saveMember(MemberPO memberPO) {
+        memberPOMapper.insertSelective(memberPO);
     }
 }

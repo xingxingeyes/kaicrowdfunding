@@ -61,8 +61,8 @@ public class RedisHandler {
         }
     }
 
-    @RequestMapping("/remote/redis/key/remote")
-    ResultEntity<String> remoteRedisKeyRemote(@RequestParam("key") String key) {
+    @RequestMapping("/remove/redis/key/remote")
+    ResultEntity<String> removeRedisKeyRemote(@RequestParam("key") String key) {
         try {
            redisTemplate.delete(key);
             return ResultEntity.successWithoutData();

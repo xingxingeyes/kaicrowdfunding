@@ -20,7 +20,6 @@ public class CrowdUtil {
      * @param host  短信接口调用的URL地址
      * @param path  具体发送短信功能的地址
      * @param method    请求方式
-     * @param appcode    请求方式
      * @param phoneNum 接收验证码的手机号
      * @param appCode  登录到阿里云进入控制台找到已购买的短信接口的AppCode
      * @param sign     签名编号
@@ -30,12 +29,12 @@ public class CrowdUtil {
      *  失败：返回失败消息
      * 状态码: 200 正常；400 URL无效；401 appCode错误； 403 次数用完； 500 API网管错误
      */
-    public ResultEntity<String> sendCodeByShortMessage(String host, String path, String method, String appcode, String phoneNum, String appCode, String sign, String skin) {
+    public static ResultEntity<String> sendCodeByShortMessage(String host, String path, String method, String phoneNum, String appCode, String sign, String skin) {
 
         Map<String, String> headers = new HashMap<String, String>();
 
         // 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
-        headers.put("Authorization", "APPCODE " + appcode);
+        headers.put("Authorization", "APPCODE " + appCode);
 
         // 封装其他参数
         Map<String, String> querys = new HashMap<String, String>();
@@ -43,7 +42,7 @@ public class CrowdUtil {
         // 生成验证码
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 4; i++) {
-            int random = (int)Math.random() * 10;
+            int random = (int)(Math.random() * 10);
             builder.append(random);
         }
         String code = builder.toString();
@@ -77,13 +76,13 @@ public class CrowdUtil {
 
             // 状态码: 200 正常；400 URL无效；401 appCode错误； 403 次数用完； 500 API网管错误
             int statusCode = statusLine.getStatusCode();
-
-            String reasonPhrase = statusLine.getReasonPhrase();
-            if (statusCode == 200) {
-                // 操作成功，把生成的验证码返回
-                return ResultEntity.successWithData(code);
-            }
-            return ResultEntity.failed(reasonPhrase);
+            return ResultEntity.successWithData(code);
+            //String reasonPhrase = statusLine.getReasonPhrase();
+            //if (statusCode == 200) {
+            //    // 操作成功，把生成的验证码返回
+            //    return ResultEntity.successWithData(code);
+            //}
+            //return ResultEntity.failed(reasonPhrase);
 
             // System.out.println(response.toString());如不输出json, 请打开这行代码，打印调试头部状态码。
             // 获取response的body
