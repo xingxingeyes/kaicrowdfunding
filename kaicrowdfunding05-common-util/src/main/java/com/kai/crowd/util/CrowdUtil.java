@@ -157,13 +157,6 @@ public class CrowdUtil {
 
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        FileInputStream inputStream = new FileInputStream("F:/SQSLG/IdeaProjects/kaicrowdfundingRepo/kaicrowdfunding05-common-util/IMG_20160603_111625.jpg");
-        ResultEntity<String> resultEntity = uploadFileToOss("http://oss-cn-shenzhen.aliyuncs.com", "LTAI5t7wnh1fyR8Ffon1J6bp", "FrTqgIjnK4jNUSiha4B90gjGxpBTwi", inputStream,
-                "kaicrowd", "http://kaicrowd.oss-cn-shenzhen.aliyuncs.com", "IMG_20160603_111625.jpg");
-        System.out.println(resultEntity);
-    }
-
 
     /*** 专门负责上传文件到 OSS 服务器的工具方法
      *  @param endpoint OSS 参数 * @param accessKeyId OSS 参数
