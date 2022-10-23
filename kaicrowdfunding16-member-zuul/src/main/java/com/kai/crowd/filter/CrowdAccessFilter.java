@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
@@ -48,10 +49,11 @@ public class CrowdAccessFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         // 1.获取当前请求对象
         RequestContext requestContext = RequestContext.getCurrentContext();
+        HttpServletRequest request = requestContext.getRequest();
         // 2.获取session对象
-        HttpServletRequest session = requestContext.getRequest();
+        HttpSession session = request.getSession();
         // 3.尝试从Session对象中获取已登录的用户
-        Object loginMember = session.getAttribute(CrowdConstant.ATTR_NAME_MEMBER);
+        Object loginMember = session.getAttribute(CrowdConstant.ATTR_NAME_LOGIN_MEMBER);
         // 4.判断loginMember是否为空
         if (loginMember == null) {
             // 5.从requestContext对象中获取Response对象

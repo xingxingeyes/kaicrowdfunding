@@ -64,8 +64,8 @@ public class MemberHandler {
         }
         // 3.创建memberLoginVO对象存入Session域
         MemberLoginVO memberLoginVO = new MemberLoginVO(memberPO.getId(), memberPO.getUsername(), memberPO.getEmail());
-        session.setAttribute(CrowdConstant.ATTR_NAME_MEMBER, memberLoginVO);
-        return "redirect:/auth/member/to/center/page";
+        session.setAttribute(CrowdConstant.ATTR_NAME_LOGIN_MEMBER, memberLoginVO);
+        return "redirect:http://www.crowd.com/auth/member/to/center/page";
     }
 
 

@@ -2,7 +2,6 @@ package com.kai.crowd.mvc.interceptor;
 
 import com.kai.crowd.constant.CrowdConstant;
 import com.kai.crowd.entity.Admin;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         // 1.通过request对象获取session对象
         HttpSession session = httpServletRequest.getSession();
         // 2.尝试从session域中获取Admin对象
-        Admin admin = (Admin) session.getAttribute(CrowdConstant.ATTR_NAME_ADMIN);
+        Admin admin = (Admin) session.getAttribute(CrowdConstant.ATTR_NAME_LOGIN_ADMIN);
         // 3.判断admin是否为空
         if (admin == null) {
             // 4.抛出异常

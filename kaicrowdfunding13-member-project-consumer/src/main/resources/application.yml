@@ -1,0 +1,27 @@
+server:
+  port: 5000
+spring:
+  application:
+    name: kai-crowd-project
+  redis:
+    host: 127.0.0.1
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  session:
+    store-type: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka/
+
+aliyun:
+  oss:
+    access-key-id: LTAI5t7wnh1fyR8Ffon1J6bp
+    access-key-secret: FrTqgIjnK4jNUSiha4B90gjGxpBTwi
+    bucket-domain: http://kaicrowd.oss-cn-shenzhen.aliyuncs.com
+    bucket-name: kaicrowd
+    end-point: http://oss-cn-shenzhen.aliyuncs.com
+
+
