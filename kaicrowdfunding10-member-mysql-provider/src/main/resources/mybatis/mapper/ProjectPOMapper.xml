@@ -120,7 +120,7 @@
   void insertTagRelationship(@Param("tagIdList")List<Integer> tagIdList, @Param("projectId")Integer projectId);
   -->
   <insert id="insertTagRelationship">
-    insert into t_project_type(`projectid`,`tagid`) values
+    insert into t_project_tag(`projectid`,`tagid`) values
     <foreach collection="tagIdList"  item="tagId" separator=",">(#{projectId},#{tagId})</foreach>
   </insert>
 
