@@ -2,6 +2,8 @@ package com.kai.crowd.mapper;
 
 import com.kai.crowd.entity.po.ProjectPO;
 import com.kai.crowd.entity.po.ProjectPOExample;
+import com.kai.crowd.entity.vo.DetailProjectVO;
+import com.kai.crowd.entity.vo.PortalTypeVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -32,4 +34,8 @@ public interface ProjectPOMapper {
     void insertTypeRelationship(@Param("typeIdList") List<Integer> typeIdList, @Param("projectId") Integer projectId);
 
     void insertTagRelationship(@Param("tagIdList")List<Integer> tagIdList, @Param("projectId")Integer projectId);
+
+    List<PortalTypeVO> selectPortalTypeVOList();
+
+    DetailProjectVO selectDetailProjectVO(Integer projectId);
 }
