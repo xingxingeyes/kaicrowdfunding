@@ -27,6 +27,13 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <!-- 继承 SpringBoot 官方指定的父工程 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+    </parent>
+
     <!-- 配置在父工程中要管理的依赖-->
     <dependencyManagement>
         <dependencies>
