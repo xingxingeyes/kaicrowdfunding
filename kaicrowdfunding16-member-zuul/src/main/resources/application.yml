@@ -21,6 +21,10 @@ zuul:
     crowd-project:
       service-id: kai-crowd-project
       path: /project/**
+    crowd-order:
+      service-id: kai-crowd-order
+      path: /order/**
+
 
 
 ribbon:
